@@ -55,7 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
-  TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
     Text(
       'Index 0: Home',
@@ -88,6 +88,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        backgroundColor: Colors.black,
       ),
       body: Center(
         child: Column(
@@ -103,41 +104,78 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.black,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            title: Text('Home'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            title: Text('Business'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.school),
-            title: Text('School'),
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.pink,
-        onTap: _onItemTapped,
-      ),
-
-      floatingActionButton: FloatingActionButton(
+      backgroundColor: Colors.grey,
+      bottomNavigationBar: BottomAppBar(
+        color: Colors.black,
+        shape: CircularNotchedRectangle(),
         child: Container(
-          height: 200.0,
-          width: 200.0,
-          child: Icon(
-            Icons.add
+          height: 75,
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              IconButton(
+                iconSize: 30.0,
+                padding: EdgeInsets.only(left: 28.0),
+                icon: Icon(Icons.home),
+                color: Colors.pink,
+                onPressed: () {
+                  setState(() {
+                    //_myPage.jumpToPage(0);
+                  });
+                },
+              ),
+              IconButton(
+                iconSize: 30.0,
+                padding: EdgeInsets.only(right: 28.0),
+                icon: Icon(Icons.search),
+                color: Colors.pink,
+                onPressed: () {
+                  setState(() {
+                    //_myPage.jumpToPage(1);
+                  });
+                },
+              ),
+              IconButton(
+                iconSize: 30.0,
+                padding: EdgeInsets.only(left: 28.0),
+                icon: Icon(Icons.notifications),
+                color: Colors.pink,
+                onPressed: () {
+                  setState(() {
+                    // _myPage.jumpToPage(2);
+                  });
+                },
+              ),
+              IconButton(
+                iconSize: 30.0,
+                padding: EdgeInsets.only(right: 28.0),
+                icon: Icon(Icons.list),
+                color: Colors.pink,
+                onPressed: () {
+                  setState(() {
+                    //_myPage.jumpToPage(3);
+                  });
+                },
+              )
+            ],
           ),
         ),
-        backgroundColor: Colors.black,
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-
+      ),
+      floatingActionButton: Container(
+        decoration: new BoxDecoration(
+          color: Colors.black,
+          shape: BoxShape.circle,
+        ),
+        height: 100.0,
+        width: 100.0,
+        child: Icon(
+          Icons.add,
+          color: Colors.pink,
+        ),
+      ),
+      // This trailing comma makes auto-formatting nicer for build methods.
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }
