@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:picshare/main.dart';
-
 import 'home/home.dart';
 
 class Wrapper extends StatelessWidget {
