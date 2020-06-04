@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "231694422927",
+    "firebase_url": "https://picshare-fe309.firebaseio.com",
+    "project_id": "picshare-fe309",
+    "storage_bucket": "picshare-fe309.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:231694422927:android:6e1507cc6b5270784271fa",
+        "android_client_info": {
+          "package_name": "com.app.picshare"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "231694422927-jltvsnolq7b70eer5s9d9hc8n50aud8s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCtNSHiWZVUciiL6k2Kbq0TTwcuxcVO0mw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "231694422927-jltvsnolq7b70eer5s9d9hc8n50aud8s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
