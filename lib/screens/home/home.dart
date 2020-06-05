@@ -4,19 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/basic.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:picshare/screens/components/navbar.dart';
 import 'package:video_player/video_player.dart';
 //Include page de profil
 import '../profil/profil.dart';
 
-
 import 'dart:async';
 import 'dart:io';
 
-
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
-  
-  
+
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
   // how it looks.
@@ -75,21 +73,21 @@ class _MyHomePageState extends State<MyHomePage> {
           source: source, maxDuration: const Duration(seconds: 10));
       await _playVideo(file);
     } else {
-        try {
-          final pickedFile = await _picker.getImage(
-            source: source,
-            maxWidth: null, //On met null pour recuperer la valeur par defaut
-            maxHeight: null, //On met null pour recuperer la valeur par defaut
-            imageQuality: null, //On met null pour recuperer la valeur par defaut
-          );
-          setState(() {
-            _imageFile = pickedFile;
-          });
-        } catch (e) {
-          setState(() {
-            _pickImageError = e;
-          });
-        }
+      try {
+        final pickedFile = await _picker.getImage(
+          source: source,
+          maxWidth: null, //On met null pour recuperer la valeur par defaut
+          maxHeight: null, //On met null pour recuperer la valeur par defaut
+          imageQuality: null, //On met null pour recuperer la valeur par defaut
+        );
+        setState(() {
+          _imageFile = pickedFile;
+        });
+      } catch (e) {
+        setState(() {
+          _pickImageError = e;
+        });
+      }
     }
   }
 
@@ -187,7 +185,7 @@ class _MyHomePageState extends State<MyHomePage> {
  * 
 */
   int _counter = 0;
-  
+
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
@@ -217,8 +215,6 @@ class _MyHomePageState extends State<MyHomePage> {
       _selectedIndex = index;
     });
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -258,60 +254,7 @@ class _MyHomePageState extends State<MyHomePage> {
               )
             : (isVideo ? _previewVideo() : _previewImage()),
       ),
-      backgroundColor: Colors.blueGrey[900],
-      bottomNavigationBar: BottomAppBar(
-        color: Colors.black,
-        shape: CircularNotchedRectangle(),
-        child: Container(
-          margin: EdgeInsets.only(left: 25.0, right: 25.0),
-          height: 60,
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              IconButton(
-                iconSize: 30.0,
-                icon: Icon(Icons.home),
-                color: Colors.red,
-                onPressed: () {
-                  setState(() {
-                    //_myPage.jumpToPage(0);
-                  });
-                },
-              ),
-              IconButton(
-                iconSize: 30.0,
-                icon: Icon(Icons.search),
-                color: Colors.red,
-                onPressed: () {
-                  setState(() {
-                    //_myPage.jumpToPage(1);
-                  });
-                },
-              ),
-              IconButton(
-                iconSize: 30.0,
-                icon: Icon(Icons.notifications),
-                color: Colors.red,
-                onPressed: () {
-                  setState(() {
-                    // _myPage.jumpToPage(2);
-                  });
-                },
-              ),
-              IconButton(
-                iconSize: 30.0,
-                icon: Icon(Icons.list),
-                color: Colors.red,
-                onPressed: () {
-                 openPage(context);
-                },
-              )
-            ],
-          ),
-        ),
-      ),
-floatingActionButton: Column(
+      floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
           FloatingActionButton(
@@ -387,6 +330,7 @@ floatingActionButton: Column(
       // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
+
   Text _getRetrieveErrorWidget() {
     if (_retrieveDataError != null) {
       final Text result = Text(_retrieveDataError);
@@ -395,7 +339,6 @@ floatingActionButton: Column(
     }
     return null;
   }
-
 }
 
 typedef void OnPickImageCallback(
