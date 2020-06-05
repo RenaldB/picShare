@@ -5,7 +5,7 @@
  */
 
 import 'package:flutter/material.dart';
-
+import '../components/navbar.dart';
 void openPage(BuildContext context) {
   Navigator.push(context, MaterialPageRoute(
     builder: (BuildContext context) {
@@ -21,6 +21,7 @@ void openPage(BuildContext context) {
             style: TextStyle(fontSize: 24, color: Colors.white),
           ),
         ),
+        bottomNavigationBar: NavBar(),
       );
     },
   ));
