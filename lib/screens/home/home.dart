@@ -254,6 +254,7 @@ class _MyHomePageState extends State<MyHomePage> {
               )
             : (isVideo ? _previewVideo() : _previewImage()),
       ),
+      
       bottomNavigationBar: NavBar(),
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,

@@ -21,6 +21,7 @@ void openPage(BuildContext context) {
             style: TextStyle(fontSize: 24, color: Colors.white),
           ),
         ),
+        
         bottomNavigationBar: NavBar(),
       );
     },
