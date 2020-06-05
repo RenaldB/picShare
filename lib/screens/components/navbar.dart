@@ -20,9 +20,7 @@ class _NavBar extends State<NavBar> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return new Scaffold(
-      backgroundColor: Colors.blueGrey[900],
-      bottomNavigationBar: BottomAppBar(
+    return new BottomAppBar(
         color: Colors.black,
         shape: CircularNotchedRectangle(),
         child: Container(
@@ -73,8 +71,6 @@ class _NavBar extends State<NavBar> {
             ],
           ),
         ),
-      ),
-    );
+      );
   }
-
 }
