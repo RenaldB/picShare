@@ -5,6 +5,9 @@ import 'package:flutter/src/widgets/basic.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:video_player/video_player.dart';
+//Include page de profil
+import '../profil/profil.dart';
+
 
 import 'dart:async';
 import 'dart:io';
@@ -72,14 +75,12 @@ class _MyHomePageState extends State<MyHomePage> {
           source: source, maxDuration: const Duration(seconds: 10));
       await _playVideo(file);
     } else {
-      await _displayPickImageDialog(context,
-          (double maxWidth, double maxHeight, int quality) async {
         try {
           final pickedFile = await _picker.getImage(
             source: source,
-            maxWidth: maxWidth,
-            maxHeight: maxHeight,
-            imageQuality: quality,
+            maxWidth: null, //On met null pour recuperer la valeur par defaut
+            maxHeight: null, //On met null pour recuperer la valeur par defaut
+            imageQuality: null, //On met null pour recuperer la valeur par defaut
           );
           setState(() {
             _imageFile = pickedFile;
@@ -89,7 +90,6 @@ class _MyHomePageState extends State<MyHomePage> {
             _pickImageError = e;
           });
         }
-      });
     }
   }
 
@@ -219,6 +219,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -257,13 +258,13 @@ class _MyHomePageState extends State<MyHomePage> {
               )
             : (isVideo ? _previewVideo() : _previewImage()),
       ),
-      backgroundColor: Colors.grey,
+      backgroundColor: Colors.blueGrey[900],
       bottomNavigationBar: BottomAppBar(
         color: Colors.black,
         shape: CircularNotchedRectangle(),
         child: Container(
-          margin: EdgeInsets.only(left: 50.0, right: 50.0),
-          height: 100,
+          margin: EdgeInsets.only(left: 25.0, right: 25.0),
+          height: 60,
           child: Row(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -271,7 +272,7 @@ class _MyHomePageState extends State<MyHomePage> {
               IconButton(
                 iconSize: 30.0,
                 icon: Icon(Icons.home),
-                color: Colors.pink,
+                color: Colors.red,
                 onPressed: () {
                   setState(() {
                     //_myPage.jumpToPage(0);
@@ -281,7 +282,7 @@ class _MyHomePageState extends State<MyHomePage> {
               IconButton(
                 iconSize: 30.0,
                 icon: Icon(Icons.search),
-                color: Colors.pink,
+                color: Colors.red,
                 onPressed: () {
                   setState(() {
                     //_myPage.jumpToPage(1);
@@ -291,7 +292,7 @@ class _MyHomePageState extends State<MyHomePage> {
               IconButton(
                 iconSize: 30.0,
                 icon: Icon(Icons.notifications),
-                color: Colors.pink,
+                color: Colors.red,
                 onPressed: () {
                   setState(() {
                     // _myPage.jumpToPage(2);
@@ -301,11 +302,9 @@ class _MyHomePageState extends State<MyHomePage> {
               IconButton(
                 iconSize: 30.0,
                 icon: Icon(Icons.list),
-                color: Colors.pink,
+                color: Colors.red,
                 onPressed: () {
-                  setState(() {
-                    //_myPage.jumpToPage(3);
-                  });
+                 openPage(context);
                 },
               )
             ],
@@ -376,7 +375,7 @@ floatingActionButton: Column(
       //     elevation: 0.0,
       //     child: Icon(
       //       Icons.add,
-      //       color: Colors.pink,
+      //       color: Colors.red,
       //     ),
       //     onPressed: () {
       //       isVideo = false;
@@ -397,61 +396,6 @@ floatingActionButton: Column(
     return null;
   }
 
-  Future<void> _displayPickImageDialog(
-      BuildContext context, OnPickImageCallback onPick) async {
-    return showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text('Add optional parameters'),
-            content: Column(
-              children: <Widget>[
-                TextField(
-                  controller: maxWidthController,
-                  keyboardType: TextInputType.numberWithOptions(decimal: true),
-                  decoration:
-                      InputDecoration(hintText: "Enter maxWidth if desired"),
-                ),
-                TextField(
-                  controller: maxHeightController,
-                  keyboardType: TextInputType.numberWithOptions(decimal: true),
-                  decoration:
-                      InputDecoration(hintText: "Enter maxHeight if desired"),
-                ),
-                TextField(
-                  controller: qualityController,
-                  keyboardType: TextInputType.number,
-                  decoration:
-                      InputDecoration(hintText: "Enter quality if desired"),
-                ),
-              ],
-            ),
-            actions: <Widget>[
-              FlatButton(
-                child: const Text('CANCEL'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-              FlatButton(
-                  child: const Text('PICK'),
-                  onPressed: () {
-                    double width = maxWidthController.text.isNotEmpty
-                        ? double.parse(maxWidthController.text)
-                        : null;
-                    double height = maxHeightController.text.isNotEmpty
-                        ? double.parse(maxHeightController.text)
-                        : null;
-                    int quality = qualityController.text.isNotEmpty
-                        ? int.parse(qualityController.text)
-                        : null;
-                    onPick(width, height, quality);
-                    Navigator.of(context).pop();
-                  }),
-            ],
-          );
-        });
-  }
 }
 
 typedef void OnPickImageCallback(

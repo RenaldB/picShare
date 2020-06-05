@@ -8,7 +8,7 @@ class Wrapper extends StatelessWidget {
     
     // return either the Home or Authenticate widget
     return MaterialApp(
-      title: 'Dickshare',
+      title: 'Pickshare',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -25,7 +25,7 @@ class Wrapper extends StatelessWidget {
         // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'PicShare Home'),
+      home: MyHomePage(title: 'PicShare'),
       debugShowCheckedModeBanner: false,
     );
   }
