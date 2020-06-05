@@ -1,14 +1,12 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:async';
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/basic.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:video_player/video_player.dart';
-
-import 'dart:async';
-import 'dart:io';
-
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
@@ -30,12 +28,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-/**
- * 
- * Photo Video
- * 
- */
-
   PickedFile _imageFile;
   dynamic _pickImageError;
   bool isVideo = false;
@@ -181,50 +173,11 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-/**
- * 
- * Fin photo Video
- * 
-*/
-  int _counter = 0;
-  
-  int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 0: Home',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 1: Business',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 2: School',
-      style: optionStyle,
-    ),
-  ];
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
-        backgroundColor: Colors.black,
       ),
       body: Center(
         child: !kIsWeb && defaultTargetPlatform == TargetPlatform.android
@@ -257,62 +210,7 @@ class _MyHomePageState extends State<MyHomePage> {
               )
             : (isVideo ? _previewVideo() : _previewImage()),
       ),
-      backgroundColor: Colors.grey,
-      bottomNavigationBar: BottomAppBar(
-        color: Colors.black,
-        shape: CircularNotchedRectangle(),
-        child: Container(
-          margin: EdgeInsets.only(left: 50.0, right: 50.0),
-          height: 100,
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              IconButton(
-                iconSize: 30.0,
-                icon: Icon(Icons.home),
-                color: Colors.pink,
-                onPressed: () {
-                  setState(() {
-                    //_myPage.jumpToPage(0);
-                  });
-                },
-              ),
-              IconButton(
-                iconSize: 30.0,
-                icon: Icon(Icons.search),
-                color: Colors.pink,
-                onPressed: () {
-                  setState(() {
-                    //_myPage.jumpToPage(1);
-                  });
-                },
-              ),
-              IconButton(
-                iconSize: 30.0,
-                icon: Icon(Icons.notifications),
-                color: Colors.pink,
-                onPressed: () {
-                  setState(() {
-                    // _myPage.jumpToPage(2);
-                  });
-                },
-              ),
-              IconButton(
-                iconSize: 30.0,
-                icon: Icon(Icons.list),
-                color: Colors.pink,
-                onPressed: () {
-                  setState(() {
-                    //_myPage.jumpToPage(3);
-                  });
-                },
-              )
-            ],
-          ),
-        ),
-      ),
-floatingActionButton: Column(
+      floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
           FloatingActionButton(
@@ -364,30 +262,9 @@ floatingActionButton: Column(
           ),
         ],
       ),
-      // floatingActionButton: Container(
-      //   decoration: new BoxDecoration(
-      //     color: Colors.black,
-      //     shape: BoxShape.circle,
-      //   ),
-      //   height: 100.0,
-      //   width: 100.0,
-      //   child: new RawMaterialButton(
-      //     shape: new CircleBorder(),
-      //     elevation: 0.0,
-      //     child: Icon(
-      //       Icons.add,
-      //       color: Colors.pink,
-      //     ),
-      //     onPressed: () {
-      //       isVideo = false;
-      //         _onImageButtonPressed(ImageSource.gallery, context: context);
-      //     },
-      //   ),
-      // ),
-      // // This trailing comma makes auto-formatting nicer for build methods.
-      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
+
   Text _getRetrieveErrorWidget() {
     if (_retrieveDataError != null) {
       final Text result = Text(_retrieveDataError);

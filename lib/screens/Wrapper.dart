@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'home/home.dart';
+//import 'photo.dart';
 
 class Wrapper extends StatelessWidget {
   @override
