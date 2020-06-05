@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
@@ -12,16 +13,32 @@
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
   <!-- Favicon -->
-  <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+  <link rel="shortcut icon" type="image/png" href="favicon.png" />
 
   <title>picshare</title>
   <link rel="manifest" href="manifest.json">
+  <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-app.js%22%3E"></script>
 </head>
+
 <body>
   <!-- This script installs service_worker.js to provide PWA functionality to
        application. For more information, see:
        https://developers.google.com/web/fundamentals/primers/service-workers -->
   <script>
+    var firebaseConfig = {
+      apiKey: "AIzaSyBxcXivFkOpHOSLqZoA1TQaLptlwY7x2Xg",
+      authDomain: "picshare-fe309.firebaseapp.com",
+      databaseURL: "https://picshare-fe309.firebaseio.com/",
+      projectId: "picshare-fe309",
+      storageBucket: "picshare-fe309.appspot.com",
+      messagingSenderId: "231694422927",
+      appId: "1:231694422927:web:bbf3c966bdbb31ed4271fa"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', function () {
         navigator.serviceWorker.register('flutter_service_worker.js');
@@ -30,4 +47,5 @@
   </script>
   <script src="main.dart.js" type="application/javascript"></script>
 </body>
+
 </html>

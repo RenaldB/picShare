@@ -1,10 +1,9 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
-
+  
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
   // how it looks.
@@ -22,7 +21,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
-
+  
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
@@ -79,14 +78,14 @@ class _MyHomePageState extends State<MyHomePage> {
         color: Colors.black,
         shape: CircularNotchedRectangle(),
         child: Container(
-          height: 75,
+          margin: EdgeInsets.only(left: 50.0, right: 50.0),
+          height: 100,
           child: Row(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               IconButton(
                 iconSize: 30.0,
-                padding: EdgeInsets.only(left: 28.0),
                 icon: Icon(Icons.home),
                 color: Colors.pink,
                 onPressed: () {
@@ -97,7 +96,6 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               IconButton(
                 iconSize: 30.0,
-                padding: EdgeInsets.only(right: 28.0),
                 icon: Icon(Icons.search),
                 color: Colors.pink,
                 onPressed: () {
@@ -108,7 +106,6 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               IconButton(
                 iconSize: 30.0,
-                padding: EdgeInsets.only(left: 28.0),
                 icon: Icon(Icons.notifications),
                 color: Colors.pink,
                 onPressed: () {
@@ -119,7 +116,6 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               IconButton(
                 iconSize: 30.0,
-                padding: EdgeInsets.only(right: 28.0),
                 icon: Icon(Icons.list),
                 color: Colors.pink,
                 onPressed: () {
@@ -132,6 +128,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ),
       ),
+
       floatingActionButton: Container(
         decoration: new BoxDecoration(
           color: Colors.black,
@@ -139,9 +136,16 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         height: 100.0,
         width: 100.0,
-        child: Icon(
-          Icons.add,
-          color: Colors.pink,
+        child: new RawMaterialButton(
+          shape: new CircleBorder(),
+          elevation: 0.0,
+          child: Icon(
+            Icons.add,
+            color: Colors.pink,
+          ),
+          onPressed: () {
+            _incrementCounter();
+          },
         ),
       ),
       // This trailing comma makes auto-formatting nicer for build methods.
