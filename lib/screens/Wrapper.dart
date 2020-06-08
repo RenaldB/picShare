@@ -14,9 +14,9 @@ class Wrapper extends StatelessWidget {
       title: 'Pickshare',
       theme: ThemeData(
         brightness: Brightness.dark,
-        primaryColor: Colors.lightBlue[800],
+         primaryColor: Colors.lightBlue[800],
         accentColor: Colors.cyan[600],
-
+        
         // Define the default font family.
         fontFamily: ' Malgun Gothic   ',
 
