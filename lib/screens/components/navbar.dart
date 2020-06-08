@@ -38,7 +38,7 @@ class _NavBar extends State<NavBar> {
             ),
             IconButton(
               iconSize: 30.0,
-              icon: Icon(Icons.search),
+              icon: Icon(Icons.people),
               onPressed: () {
                 setState(() {
                   //_myPage.jumpToPage(1);

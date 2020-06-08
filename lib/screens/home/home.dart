@@ -30,28 +30,7 @@ class _MyHomePageState extends State<MyHomePage> {
           return StaggeredTile.fit(2);
         }),
       ),
-      bottomNavigationBar:
-          BottomNavigationBar(type: BottomNavigationBarType.fixed, items: [
-        BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          title: Text("Home"),
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.people),
-          title: Text("Following"),
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.notifications),
-          title: Text("Notifications"),
-        ),
-        BottomNavigationBarItem(
-          icon: CircleAvatar(
-            backgroundColor: Colors.grey,
-            child: Text("S"),
-          ),
-          title: Text("Profil"),
-        )
-      ]),
+      bottomNavigationBar: NavBar(),
     );
   }
 }
@@ -65,20 +44,19 @@ class _Tile extends StatelessWidget {
     return Container(
       margin: EdgeInsets.all(10),
       child: ClipRRect(
-          borderRadius: BorderRadius.all(Radius.circular(5)),
-          child: Hero(
-            child: InkWell(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    CupertinoPageRoute(
-                        builder: (context) =>
-                            Detail("assets/images/stream/$i.png")));
-              },
-              child: Image.asset("assets/images/stream/$i.png"),
+        borderRadius: BorderRadius.all(Radius.circular(5)),
+        child: InkWell(
+            onTap: () {
+              Navigator.push(
+                context,
+                CupertinoPageRoute(
+                  builder: (context) => Detail("assets/images/stream/$i.png"),
+                ),
+              );
+            },
+            child: Hero( child: Image.asset("assets/images/stream/$i.png"), tag: "assets/images/stream/$i.png",),
             ),
-            tag: "assets/images/stream/$i.png",
-          )),
+      ),
     );
   }
 }
