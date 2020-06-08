@@ -5,6 +5,7 @@ import 'package:flutter/src/widgets/basic.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:picshare/screens/components/navbar.dart';
+import 'package:picshare/services/auth.dart';
 import 'package:video_player/video_player.dart';
 //Include page de profil
 import '../profil/profil.dart';
@@ -47,6 +48,7 @@ class _MyHomePageState extends State<MyHomePage> {
   final TextEditingController maxWidthController = TextEditingController();
   final TextEditingController maxHeightController = TextEditingController();
   final TextEditingController qualityController = TextEditingController();
+  AuthService _auth = AuthService();
 
   Future<void> _playVideo(PickedFile file) async {
     if (file != null && mounted) {
@@ -222,6 +224,13 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
         backgroundColor: Colors.black,
+        actions: <Widget>[
+          FlatButton.icon(
+            icon: Icon(Icons.person),
+            label: Text('Log Out'),
+            onPressed: () => _auth.signOut(),
+          ),
+        ],
       ),
       body: Center(
         child: !kIsWeb && defaultTargetPlatform == TargetPlatform.android
