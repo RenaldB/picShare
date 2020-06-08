@@ -3,6 +3,7 @@ import 'package:picshare/screens/components/rounded_input_field.dart';
 import 'package:picshare/screens/components/rounded_password_field.dart';
 import 'package:picshare/services/auth.dart';
 import 'package:flutter/material.dart';
+import 'package:picshare/shared/loading.dart';
 
 class SignIn extends StatefulWidget {
 
@@ -16,14 +17,17 @@ class SignIn extends StatefulWidget {
 class _SignInState extends State<SignIn> {
 
   final AuthService _auth = AuthService();
+  final _formKey = GlobalKey<FormState>();
+  bool loading = false;
 
   // text field state
   String email = '';
   String password = '';
+  String error = '';
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return loading ? Loading() : Scaffold(
       /*appBar: AppBar(
         elevation: 0.0,
         title: Text('Sign in to Brew Crew'),
@@ -44,11 +48,12 @@ class _SignInState extends State<SignIn> {
         ),
         padding: EdgeInsets.symmetric( horizontal: 25.0),
         child: Form(
+          key: _formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              SizedBox(height: 20.0),
+              SizedBox(height: 15.0),
               Text(
                 "Connexion",
                 textAlign: TextAlign.center,
@@ -65,7 +70,7 @@ class _SignInState extends State<SignIn> {
                   setState(() => email = val);
                 },
               ),*/
-              SizedBox(height: 40.0),
+              //SizedBox(height: 40.0),
               RoundedInputField(
                 hintText: "Adresse e-mail",
                 onChanged: (val) {
@@ -89,7 +94,7 @@ class _SignInState extends State<SignIn> {
                   setState(() => password = val);
                 },
               ),
-              SizedBox(height: 20.0),
+              //SizedBox(height: 20.0),
               /*RaisedButton(
                 child: Text(
                   'Se connecter',
@@ -108,14 +113,23 @@ class _SignInState extends State<SignIn> {
               ),*/
 
               RoundedButton(
-                text: "S'INSCRIRE",
+                text: "SE CONNECTER",
                 fontsize: 20,
                 press: () async {
-                  _auth.signInWithEmailAndPassword(email.trim(), password);
+                  if(_formKey.currentState.validate()){
+                    setState(() => loading = true);
+                    dynamic res = _auth.signInWithEmailAndPassword(email.trim(), password);
+                    if(res == null){
+                      setState(() {
+                        error = 'Adresse email ou mot de passe erronée/s';
+                        loading = false;
+                      });
+                    }
+                  }
                 },
               ),
               RoundedButton(
-                text: "S'INSCRIRE",
+                text: "S'inscrire",
                 fontsize: 15,
                 press :() => widget.toggleView(),
               ),
@@ -127,6 +141,11 @@ class _SignInState extends State<SignIn> {
                 onPressed: () async {
                   _auth.signInAnon();
                 },
+              ),
+              //SizedBox(height: 12.0),
+              Text(
+                error,
+                style: TextStyle(color: Colors.red, fontSize: 14.0),
               ),
             ],
           ),
