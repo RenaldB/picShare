@@ -33,18 +33,36 @@ class _SignInState extends State<SignIn> {
         ],
       ),*/
       body: Container(
-        padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/images/Signin.jpg"),
+            fit: BoxFit.cover,
+          ),
+        ),
+        padding: EdgeInsets.symmetric( horizontal: 25.0),
         child: Form(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               SizedBox(height: 20.0),
               TextFormField(
+                decoration: const InputDecoration(
+                  icon: Icon(Icons.alternate_email),
+                  labelText: 'Email',
+                  
+                ),
                 onChanged: (val) {
                   setState(() => email = val);
                 },
               ),
               SizedBox(height: 20.0),
               TextFormField(
+                decoration: const InputDecoration(
+                  icon: Icon(Icons.vpn_key),
+                  labelText: 'Mot de passe',
+                ),
+                keyboardType: TextInputType.visiblePassword ,
                 obscureText: true,
                 onChanged: (val) {
                   setState(() => password = val);
@@ -52,14 +70,31 @@ class _SignInState extends State<SignIn> {
               ),
               SizedBox(height: 20.0),
               RaisedButton(
+                color: Colors.blueAccent,
                 child: Text(
                   'Se connecter',
-                  style: TextStyle(fontSize: 20)
+                  style: TextStyle(fontSize: 20, color: Colors.white),
                 ),
                 onPressed: () async {
                   _auth.signInWithEmailAndPassword(email.trim(), password);
                 },
-                splashColor: Colors.blueAccent[200],
+              ),
+              RaisedButton(
+                color: Colors.blueAccent,
+                child: Text(
+                  "S'inscrire",
+                  style: TextStyle(fontSize: 20, color: Colors.white),
+                ),
+               onPressed: () => widget.toggleView(),
+              ),
+              FlatButton(
+                child: Text(
+                  'Continuer sans se connecter',
+                  style: TextStyle(fontSize: 9)
+                ),
+                onPressed: () async {
+                  _auth.signInAnon();
+                },
               ),
             ],
           ),
