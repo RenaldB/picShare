@@ -223,7 +223,6 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
-        backgroundColor: Colors.black,
         actions: <Widget>[
           FlatButton.icon(
             icon: Icon(Icons.person),
@@ -232,8 +231,68 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],
       ),
-      body: Center(
-        child: !kIsWeb && defaultTargetPlatform == TargetPlatform.android
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget> [
+            Container(
+              height: 100.0,
+              color: Colors.redAccent,
+              ),
+              Container(
+              height: 100.0,
+              color: Colors.blueAccent,
+              ),
+              Container(
+              height: 100.0,
+              color: Colors.greenAccent,
+              ),
+              Container(
+              height: 100.0,
+              color: Colors.yellowAccent,
+              ),
+              Container(
+              height: 100.0,
+              color: Colors.blueAccent,
+              ),
+              Container(
+              height: 100.0,
+              color: Colors.greenAccent,
+              ),
+              Container(
+              height: 100.0,
+              color: Colors.yellowAccent,
+              ),
+              Container(
+              height: 100.0,
+              color: Colors.redAccent,
+              ),
+              Container(
+              height: 100.0,
+              color: Colors.blueAccent,
+              ),
+              Container(
+              height: 100.0,
+              color: Colors.greenAccent,
+              ),
+              Container(
+              height: 100.0,
+              color: Colors.yellowAccent,
+              ),
+              Container(
+              height: 100.0,
+              color: Colors.blueAccent,
+              ),
+              Container(
+              height: 100.0,
+              color: Colors.greenAccent,
+              ),
+              Container(
+              height: 100.0,
+              color: Colors.yellowAccent,
+              )
+        ],),
+        /*child: !kIsWeb && defaultTargetPlatform == TargetPlatform.android
             ? FutureBuilder<void>(
                 future: retrieveLostData(),
                 builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
@@ -261,10 +320,10 @@ class _MyHomePageState extends State<MyHomePage> {
                   }
                 },
               )
-            : (isVideo ? _previewVideo() : _previewImage()),
+            : (isVideo ? _previewVideo() : _previewImage()),*/
       ),
       
-      bottomNavigationBar: NavBar(),
+      bottomNavigationBar: NavBar(),  //NavBar
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
@@ -292,7 +351,6 @@ class _MyHomePageState extends State<MyHomePage> {
           Padding(
             padding: const EdgeInsets.only(top: 16.0),
             child: FloatingActionButton(
-              backgroundColor: Colors.red,
               onPressed: () {
                 isVideo = true;
                 _onImageButtonPressed(ImageSource.gallery);
@@ -305,7 +363,6 @@ class _MyHomePageState extends State<MyHomePage> {
           Padding(
             padding: const EdgeInsets.only(top: 16.0),
             child: FloatingActionButton(
-              backgroundColor: Colors.red,
               onPressed: () {
                 isVideo = true;
                 _onImageButtonPressed(ImageSource.camera);

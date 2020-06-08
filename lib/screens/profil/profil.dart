@@ -1,29 +1,33 @@
 /**
  * 
- * Page de profil
+ * NAVBAR
  * 
  */
 
 import 'package:flutter/material.dart';
-import '../components/navbar.dart';
-void openPage(BuildContext context) {
-  Navigator.push(context, MaterialPageRoute(
-    builder: (BuildContext context) {
-      return Scaffold(
-        backgroundColor: Colors.blueGrey[900],
-        appBar: AppBar(
-          title: const Text('Profil'),
-          backgroundColor: Colors.black,
-        ),
-        body: const Center(
-          child: Text(
-            'Page de profil',
-            style: TextStyle(fontSize: 24, color: Colors.white),
-          ),
-        ),
-        
-        bottomNavigationBar: NavBar(),
-      );
-    },
-  ));
+class Profil extends StatefulWidget {
+
+  
+  @override
+  _Profil createState() => new _Profil();
+  
+}
+
+class _Profil extends State<Profil> {
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(appBar: AppBar(
+      title: Text('Page de profil')
+    ) ,
+    body: Center(
+      child: Text(
+        'Je suis la page de profil',
+        textScaleFactor: 2.0,
+        textAlign: TextAlign.center,
+        style: TextStyle(),
+      ),
+    ),
+    );
+  }
 }
