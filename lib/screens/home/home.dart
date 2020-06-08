@@ -18,25 +18,6 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        iconTheme: IconThemeData(color: Colors.black),
-        title: TextField(
-          decoration: InputDecoration(
-              hintText: "Search",
-              prefix: Icon(Icons.search, color: Colors.black),
-              suffixIcon: Icon(
-                Icons.camera_alt,
-                color: Colors.black,
-              )),
-        ),
-        actions: <Widget>[
-          Container(
-            margin: EdgeInsets.only(right: 10),
-            child: Icon(Icons.message),
-          )
-        ],
-      ),
       body: StaggeredGridView.count(
         crossAxisCount: 4,
         children: List.generate(
