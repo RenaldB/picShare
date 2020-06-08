@@ -1,8 +1,4 @@
-/**
- * 
- * NAVBAR
- * 
- */
+///     Profil
 
 import 'package:flutter/material.dart';
 import 'package:picshare/services/auth.dart';

@@ -1,9 +1,9 @@
+/// 
 
-/**
- * 
- * NAVBAR
- * 
- */
+/// NAVBAR
+
+/// 
+
 
 import 'package:flutter/material.dart';
 import '../profil/profil.dart';
@@ -16,8 +16,6 @@ class NavBar extends StatefulWidget {
 class _NavBar extends State<NavBar> {
   @override
   Widget build(BuildContext context) {
-
-    // TODO: implement build
     return new BottomAppBar(
       shape: CircularNotchedRectangle(),
       child: Container(
@@ -55,12 +53,11 @@ class _NavBar extends State<NavBar> {
               },
             ),
             IconButton(
-              iconSize: 30.0,
-              icon: Icon(Icons.list),
+              icon: Icon(Icons.menu),
               onPressed: () {
-                pageProfil();
+                Scaffold.of(context).openEndDrawer();
               },
-            )
+            ),
           ],
         ),
       ),
@@ -68,11 +65,11 @@ class _NavBar extends State<NavBar> {
   }
 
   void pageProfil() {
-      print("Open");
-      Navigator.push(context,
-          new MaterialPageRoute(builder: (BuildContext context) {
-        print('to Profil');
-        return Profil();
-      }));
+    print("Open");
+    Navigator.push(context,
+        new MaterialPageRoute(builder: (BuildContext context) {
+      print('to Profil');
+      return Profil();
+    }));
   }
 }
