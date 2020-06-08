@@ -30,6 +30,7 @@ class _RegisterState extends State<Register> {
         : Scaffold(
             body: SingleChildScrollView(
               child: Container(
+                height:  MediaQuery.of(context).size.height,
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     image:
