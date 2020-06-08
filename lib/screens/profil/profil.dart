@@ -19,11 +19,12 @@ class _Profil extends State<Profil> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(appBar: AppBar(
-      title: Text('Page de profil'),
+      title: Text('Profil'),
       actions: <Widget>[
           FlatButton.icon(
             icon: Icon(Icons.person),
-            label: Text('Log Out'),
+            label: Text('déconnexion'),
+            textColor: Colors.red,
             onPressed: (){
               _auth.signOut();
               Navigator.pop(context);
