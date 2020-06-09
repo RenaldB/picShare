@@ -117,7 +117,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   leading: Icon(Icons.do_not_disturb, color: Colors.red),
                   onTap: () {
-                      //Page parametre
+                      _auth.signOut();
                     }
                 ),
               ),
@@ -146,7 +146,6 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  ///
   ///Redirection pour la page de profil
   void pageProfil() {
     print("Open");
