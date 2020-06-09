@@ -1,134 +1,90 @@
-import 'package:flutter/material.dart';
 import 'dart:io';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
+import 'package:flutter/material.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/widgets.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
-class UploadImageDemo extends StatefulWidget {
-  UploadImageDemo() : super();
+class Uploader extends StatefulWidget {
+final File file;
 
-  final String title = "Upload Image Demo";
+  Uploader({Key key, this.file}) : super(key:key);
 
-  @override
-  UploadImageDemoState createState() => UploadImageDemoState();
+@override
+  _UploaderState createState() => _UploaderState();
+
 }
 
-class UploadImageDemoState extends State<UploadImageDemo> {
-  //
-  static final String uploadEndPoint = '';
-  Future<File> file;
-  String status = '';
-  String base64Image;
-  File tmpFile;
-  String errMessage = "Erreur sur l'envoie de l'image";
+class _UploaderState extends State<Uploader> {
+  final FirebaseStorage _storage =
+      FirebaseStorage(storageBucket: 'gs://fireship-lessons.appspot.com');
 
-  chooseImage() {
+  StorageUploadTask _uploadTask;
+
+  /// Starts an upload task
+  void _startUpload() {
+
+    /// Unique file name for the file
+    String filePath = 'images/${DateTime.now()}.png';
+
     setState(() {
-      file = ImagePicker.pickImage(source: ImageSource.gallery);
+      _uploadTask = _storage.ref().child(filePath).putFile(widget.file);
     });
-    setStatus('');
-  }
-
-  setStatus(String message) {
-    setState(() {
-      status = message;
-    });
-  }
-
-  startUpload() {
-    setStatus("Envoie de l'image...");
-    if (null == tmpFile) {
-      setStatus(errMessage);
-      return;
-    }
-    String fileName = tmpFile.path.split('/').last;
-    upload(fileName);
-  }
-
-  upload(String fileName) {
-    http.post(uploadEndPoint, body: {
-      "image": base64Image,
-      "name": fileName,
-    }).then((result) {
-      setStatus(result.statusCode == 200 ? result.body : errMessage);
-    }).catchError((error) {
-      setStatus(error);
-    });
-  }
-
-  Widget showImage() {
-    return FutureBuilder<File>(
-      future: file,
-      builder: (BuildContext context, AsyncSnapshot<File> snapshot) {
-        if (snapshot.connectionState == ConnectionState.done &&
-            null != snapshot.data) {
-          tmpFile = snapshot.data;
-          base64Image = base64Encode(snapshot.data.readAsBytesSync());
-          return Flexible(
-            child: Image.file(
-              snapshot.data,
-              fit: BoxFit.fill,
-            ),
-          );
-        } else if (null != snapshot.error) {
-          return const Text(
-            "Erreur sur la sélection d'image",
-            textAlign: TextAlign.center,
-          );
-        } else {
-          return const Text(
-            'Aucune image sélectionné',
-            textAlign: TextAlign.center,
-          );
-        }
-      },
-    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Créer un PicShare"),
-      ),
-      body: Container(
-        padding: EdgeInsets.all(30.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            OutlineButton(
-              onPressed: chooseImage,
-              child: Text('Choisir une image...'),
-            ),
-            SizedBox(
-              height: 20.0,
-            ),
-            showImage(),
-            SizedBox(
-              height: 20.0,
-            ),
-            OutlineButton(
-              onPressed: startUpload,
-              child: Text('Enregistrer'),
-            ),
-            SizedBox(
-              height: 20.0,
-            ),
-            Text(
-              status,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.green,
-                fontWeight: FontWeight.w500,
-                fontSize: 20.0,
-              ),
-            ),
-            SizedBox(
-              height: 20.0,
-            ),
-          ],
-        ),
-      ),
-    );
+    if (_uploadTask != null) {
+
+      /// Manage the task state and event subscription with a StreamBuilder
+      return StreamBuilder<StorageTaskEvent>(
+          stream: _uploadTask.events,
+          builder: (_, snapshot) {
+            var event = snapshot?.data?.snapshot;
+
+            double progressPercent = event != null
+                ? event.bytesTransferred / event.totalByteCount
+                : 0;
+
+            return Column(
+
+                children: [
+                  if (_uploadTask.isComplete)
+                    Text('🎉🎉🎉'),
+
+
+                  if (_uploadTask.isPaused)
+                    FlatButton(
+                      child: Icon(Icons.play_arrow),
+                      onPressed: _uploadTask.resume,
+                    ),
+
+                  if (_uploadTask.isInProgress)
+                    FlatButton(
+                      child: Icon(Icons.pause),
+                      onPressed: _uploadTask.pause,
+                    ),
+
+                  // Progress bar
+                  LinearProgressIndicator(value: progressPercent),
+                  Text(
+                    '${(progressPercent * 100).toStringAsFixed(2)} % '
+                  ),
+                ],
+              );
+          });
+
+          
+    } else {
+
+      // Allows user to decide when to start the upload
+      return FlatButton.icon(
+          label: Text('Upload to Firebase'),
+          icon: Icon(Icons.cloud_upload),
+          onPressed: _startUpload,
+        );
+
+    }
   }
 }
+

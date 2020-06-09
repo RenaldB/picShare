@@ -23,7 +23,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   AuthService _auth = AuthService();
-  
+
   bool showUserDetails = false;
 //Detecte la plateform
   bool isIos = UniversalPlatform.isIOS;
@@ -120,7 +120,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   leading: Icon(Icons.settings),
                   onTap: () {
-                      UploadImageDemoState().startUpload();
+                      //UploadImageDemoState().startUpload();
                     }
                 ),
               ),
@@ -180,7 +180,7 @@ class _MyHomePageState extends State<MyHomePage> {
     Navigator.push(context,
         new MaterialPageRoute(builder: (BuildContext context) {
       print('to upload image');
-      return UploadImageDemo();
+      return Uploader();
     }));
   }
 }
