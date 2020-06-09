@@ -7,7 +7,7 @@ import 'package:picshare/screens/components/navbar.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:picshare/screens/home/detail.dart';
 import '../profil/profil.dart';
-import '../components/uploadImage.dart';
+import '../components/uploadImage2.dart';
 import 'package:picshare/services/auth.dart';
 
 import 'package:universal_platform/universal_platform.dart';
@@ -180,7 +180,7 @@ class _MyHomePageState extends State<MyHomePage> {
     Navigator.push(context,
         new MaterialPageRoute(builder: (BuildContext context) {
       print('to upload image');
-      return Uploader();
+      return ImageCapture();
     }));
   }
 }

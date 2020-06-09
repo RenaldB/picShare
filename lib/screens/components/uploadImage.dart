@@ -17,7 +17,7 @@ final File file;
 
 class _UploaderState extends State<Uploader> {
   final FirebaseStorage _storage =
-      FirebaseStorage(storageBucket: 'gs://fireship-lessons.appspot.com');
+      FirebaseStorage(storageBucket: 'gs://picshare-fe309.appspot.com');
 
   StorageUploadTask _uploadTask;
 
