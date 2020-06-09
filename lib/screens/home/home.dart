@@ -31,18 +31,17 @@ class _MyHomePageState extends State<MyHomePage> {
   bool isLinux = UniversalPlatform.isLinux;
   bool isAndroid = UniversalPlatform.isAndroid;
   bool isFuchsia = UniversalPlatform.isFuchsia;
-  var valCrossAxisCount;  //Nombre de colonne
+  var valCrossAxisCount; //Nombre de colonne
 
   @override
   Widget build(BuildContext context) {
-
     //Détecte si si en Mode Portrait ou Paysage
     var isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
     //Si mode portrait
     if (isPortrait == true) {
       // is portrait
       valCrossAxisCount = 4;
-    } 
+    }
     //Si mode Paysage
     else {
       // is landscape
@@ -51,63 +50,83 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return Scaffold(
       endDrawer: Drawer(
-        // column holds all the widgets in the drawer
-        child: Column(
-          children: <Widget>[
-            Expanded(
-              // ListView contains a group of widgets that scroll inside the drawer
-              child: ListView(
-                children: <Widget>[
-                  UserAccountsDrawerHeader(
-                    accountName: Text("BOOZ Rénald"),
-                    accountEmail: Text(
-                      "Web: ${UniversalPlatform.isWeb} \n "
-                      "MacOS: ${UniversalPlatform.isMacOS} \n"
-                      "Windows: ${UniversalPlatform.isWindows} \n"
-                      "Linux: ${UniversalPlatform.isLinux} \n"
-                      "Android: ${UniversalPlatform.isAndroid} \n"
-                      "IOS: ${UniversalPlatform.isIOS} \n"
-                      "Fuschia: ${UniversalPlatform.isFuchsia} \n",
+        child: Container(
+          color: Theme.of(context).primaryColorDark,
+          child: ListView(
+            children: <Widget>[
+              new Container(
+                child: new UserAccountsDrawerHeader(
+                  accountName: Text(
+                    "Rénald Booz",
+                    style: new TextStyle(fontSize: 15.0),
+                  ),
+                  accountEmail: Text(
+                    "renaldbooz@live.fr",
+                    style: new TextStyle(fontSize: 15.0),
+                  ),
+                  currentAccountPicture: Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                        fit: BoxFit.fill,
+                        image: new ExactAssetImage(
+                            'assets/images/photo profil.jpg'),
+                      ),
                     ),
                   ),
-                  ListTile(
-                      leading: Icon(Icons.person),
-                      title: Text('Profil'),
-                      onTap: () {
-                        pageProfil();
-                      }),
-                ],
+                ),
               ),
-            ),
-            // This container holds the align
-            Container(
-                // This align moves the children to the bottom
-                child: Align(
-                    alignment: FractionalOffset.bottomCenter,
-                    // This container holds all the children that will be aligned
-                    // on the bottom and should not scroll with the above ListView
-                    child: Container(
-                        child: Column(
-                      children: <Widget>[
-                        Divider(),
-                        ListTile(
-                            leading: Icon(Icons.settings),
-                            title: Text('Settings')),
-                        ListTile(
-                            leading: Icon(
-                              Icons.do_not_disturb,
-                              color: Colors.red,
-                            ),
-                            title: Text(
-                              'Déconnexion',
-                              style: TextStyle(color: Colors.red),
-                            ),
-                            onTap: () {
-                              _auth.signOut();
-                            }),
-                      ],
-                    ))))
-          ],
+              new Container(
+                child: ListTile(
+                    leading: Icon(
+                      Icons.person,
+                    ),
+                    title: Text(
+                      'Profil',
+                      style: new TextStyle(fontSize: 18.0, color: Colors.white),
+                    ),
+                    onTap: () {
+                      pageProfil();
+                    }),
+              ),
+              new Divider(
+                height: 5.0,
+                color: Colors.black45,
+              ),
+              new Container(
+                child: new ListTile(
+                  title: Text(
+                    "Paramètre",
+                    style: new TextStyle(fontSize: 18.0, color: Colors.white),
+                  ),
+                  leading: Icon(Icons.settings),
+                  onTap: () {
+                      //Page parametre
+                    }
+                ),
+              ),
+              new Divider(
+                height: 5.0,
+                color: Colors.black45,
+              ),
+              new Container(
+                child: new ListTile(
+                  title: Text(
+                    "Déconnexion",
+                    style: new TextStyle(fontSize: 18.0, color: Colors.red),
+                  ),
+                  leading: Icon(Icons.do_not_disturb, color: Colors.red),
+                  onTap: () {
+                      //Page parametre
+                    }
+                ),
+              ),
+              new Divider(
+                height: 5.0,
+                color: Colors.black45,
+              ),
+            ],
+          ),
         ),
       ),
       endDrawerEnableOpenDragGesture: true,
