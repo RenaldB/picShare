@@ -7,6 +7,7 @@ import 'package:picshare/screens/components/navbar.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:picshare/screens/home/detail.dart';
 import '../profil/profil.dart';
+import '../components/uploadImage.dart';
 import 'package:picshare/services/auth.dart';
 
 import 'package:universal_platform/universal_platform.dart';
@@ -22,6 +23,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   AuthService _auth = AuthService();
+  
   bool showUserDetails = false;
 //Detecte la plateform
   bool isIos = UniversalPlatform.isIOS;
@@ -94,6 +96,23 @@ class _MyHomePageState extends State<MyHomePage> {
                 color: Colors.black45,
               ),
               new Container(
+                child: ListTile(
+                    leading: Icon(
+                      Icons.image,
+                    ),
+                    title: Text(
+                      'Ajout image',
+                      style: new TextStyle(fontSize: 18.0, color: Colors.white),
+                    ),
+                    onTap: () {
+                      pageUpload();
+                    }),
+              ),
+              new Divider(
+                height: 5.0,
+                color: Colors.black45,
+              ),
+              new Container(
                 child: new ListTile(
                   title: Text(
                     "Paramètre",
@@ -101,7 +120,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   leading: Icon(Icons.settings),
                   onTap: () {
-                      //Page parametre
+                      UploadImageDemoState().startUpload();
                     }
                 ),
               ),
@@ -153,6 +172,15 @@ class _MyHomePageState extends State<MyHomePage> {
         new MaterialPageRoute(builder: (BuildContext context) {
       print('to Profil');
       return Profil();
+    }));
+  }
+
+  void pageUpload() {
+    print("Open");
+    Navigator.push(context,
+        new MaterialPageRoute(builder: (BuildContext context) {
+      print('to upload image');
+      return UploadImageDemo();
     }));
   }
 }
