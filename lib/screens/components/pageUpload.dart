@@ -11,13 +11,14 @@ class Gallery extends StatefulWidget {
   final String text;
 
   @override
-  _Gallery createState() => new _Gallery();
+  _Gallery createState() => new _Gallery(text: text);
 }
 
 class _Gallery extends State<Gallery> {
   /// Active image file
   File _imageFile;
-  
+  String text;
+  _Gallery({this.text});
 
   /// Cropper plugin
   Future<void> _cropImage() async {
