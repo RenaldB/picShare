@@ -3,7 +3,7 @@ import 'package:picshare/screens/components/text_field_container.dart';
 
 class RoundedPasswordField extends StatelessWidget {
   final ValueChanged<String> onChanged;
-  bool visibility = true;
+  
   RoundedPasswordField({
     Key key,
     this.onChanged, String hintText,
@@ -13,7 +13,7 @@ class RoundedPasswordField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFieldContainer(
       child: TextFormField(
-        obscureText: visibility,
+        obscureText: true,
         onChanged: onChanged,
         validator: (value) {
           if (value.isEmpty || value.length < 5) {
@@ -28,10 +28,7 @@ class RoundedPasswordField extends StatelessWidget {
           ),
           suffixIcon: IconButton(
             icon: Icon(Icons.visibility),
-            onPressed: () {
-              visibility= !visibility;
-                        print('Visibi : ' + visibility.toString());
-                      }, 
+            onPressed:() => {}
           ),
           border: InputBorder.none,
         ),
