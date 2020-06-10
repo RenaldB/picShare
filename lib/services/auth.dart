@@ -1,5 +1,7 @@
+import 'package:picshare/models/picshare.dart';
 import 'package:picshare/models/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:picshare/services/database.dart';
 
 class AuthService {
 
@@ -47,6 +49,7 @@ class AuthService {
     try {
       AuthResult result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       FirebaseUser user = result.user;
+      await DatabaseService(uid: user.uid).updatePicShare(PicShare(addedDate: DateTime.now(), picDesc: 'Une descr', picName: 'Une image', picPath: 'random'));
       return _userFromFirebaseUser(user);
     } catch (error) {
       print(error.toString());

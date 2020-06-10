@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:picshare/models/user.dart';
 import 'package:picshare/screens/authenticate/authenticate.dart';
+import 'package:picshare/services/database.dart';
 import 'package:provider/provider.dart';
 import 'home/home.dart';
 //import 'photo.dart';

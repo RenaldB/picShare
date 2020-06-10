@@ -8,7 +8,19 @@ class DatabaseService {
   DatabaseService({ this.uid });
   // collection reference
   final CollectionReference picshareCollection = Firestore.instance.collection('picshare');
+  final CollectionReference userCollection = Firestore.instance.collection('user');
 
+  Future<void> updatePicShare(PicShare pic) async {
+    return await picshareCollection.document(pic.picName).setData({
+      //'pic' : pic;
+      'picName': pic.picName,
+      'picPath': pic.picPath,
+      'picDesc': pic.picDesc,
+      'addedDate': pic.addedDate,
+      'tags': pic.tags,
+      'uid': pic.uid,
+    });
+  }
   List<PicShare> _picShareListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc){
       //print(doc.data);
@@ -32,10 +44,11 @@ class DatabaseService {
       email: snapshot.data['email']
     );
   }
-  Future<void> updateUserData(String nickname, DateTime birthDate) async {
-    return await picshareCollection.document(uid).setData({
+  Future<void> updateUserData(String nickname, DateTime dateBirth) async {
+    return await userCollection.document(uid).setData({
       'nickname': nickname,
-      'birthDate': birthDate
+      'dateBirth': dateBirth,
+      'dateInscription' : DateTime.now()
     });
   }
 }

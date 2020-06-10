@@ -38,7 +38,8 @@ class _ImageCaptureState extends State<ImageCapture> {
     PickedFile selected = await _picker.getImage(source: source);
 
     setState(() {
-      _imageFile =File(selected.path);
+      if(selected.path.isNotEmpty)
+        _imageFile =File(selected.path);
     });
   }
 
