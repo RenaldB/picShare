@@ -1,9 +1,12 @@
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:picshare/models/picshare.dart';
 import 'package:picshare/screens/components/navbar.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:picshare/screens/home/detail.dart';
+import 'package:picshare/services/database.dart';
 import '../profil/profil.dart';
 import '../components/uploadImage2.dart';
 import 'package:picshare/services/auth.dart';
@@ -37,6 +40,8 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     //Détecte si si en Mode Portrait ou Paysage
     var isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
+    DatabaseService _db = DatabaseService(uid: "lfNA6a4NadbQdMUwW32lKtHalED2");
+    final tmp = _db.picshare;
     //Si mode portrait
     if (isPortrait == true) {
       // is portrait
@@ -147,7 +152,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       endDrawerEnableOpenDragGesture: true,
-      body: StaggeredGridView.count(
+      /*body: StaggeredGridView.count(
         crossAxisCount: valCrossAxisCount,
         children: List.generate(
           10,
@@ -158,6 +163,19 @@ class _MyHomePageState extends State<MyHomePage> {
         staggeredTiles: List.generate(10, (int index) {
           return StaggeredTile.fit(2);
         }),
+      ),*/
+      body: StreamBuilder(
+        stream: tmp,
+        builder: (BuildContext context, AsyncSnapshot<List<PicShare>> snapshot){
+          print("pritish : ${snapshot.data}");
+          if(snapshot.hasError){
+            print("${snapshot.error}");
+          }
+          if(!snapshot.hasData){
+            return CircularProgressIndicator();
+          }
+          return Text("Il a quelque chose");
+        },
       ),
       bottomNavigationBar: NavBar(),
     );

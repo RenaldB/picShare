@@ -21,15 +21,16 @@ class DatabaseService {
       'uid': pic.uid,
     });
   }
-  List<PicShare> _picShareListFromSnapshot(QuerySnapshot snapshot) {
+  List<PicShare> _picShareListFromSnapshot(QuerySnapshot snapshot)  {
     return snapshot.documents.map((doc){
-      //print(doc.data);
+      print(doc.data);
       return PicShare(
         picName: doc.data['picName'] ?? '',
         picPath: doc.data['picPath'] ?? '',
         picDesc: doc.data['picDesc'] ?? '',
         addedDate: DateTime.tryParse(doc.data['addedDate']) ?? DateTime.now() ,
-        tags: (doc.data['tags'] ?? '').split(';')
+        tags: (doc.data['tags'] ?? '').split(';'),
+        uid: doc.data['uid'] ?? '',
       );
     }).toList();
   }
