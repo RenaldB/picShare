@@ -120,7 +120,7 @@ class _FancyFabState extends State<FancyFab>
           pageUpload("photo");
         },
         tooltip: 'Add',
-        child: Icon(Icons.add),
+        child: Icon(Icons.add_a_photo),
       ),
     );
   }
@@ -134,17 +134,6 @@ class _FancyFabState extends State<FancyFab>
         },
         tooltip: 'Image',
         child: Icon(Icons.image),
-      ),
-    );
-  }
-
-  Widget inbox() {
-    return Container(
-      child: FloatingActionButton(
-        heroTag: "btn3",
-        onPressed: null,
-        tooltip: 'Inbox',
-        child: Icon(Icons.inbox),
       ),
     );
   }
@@ -172,7 +161,7 @@ class _FancyFabState extends State<FancyFab>
         Transform(
           transform: Matrix4.translationValues(
             0.0,
-            _translateButton.value * 3.0,
+            _translateButton.value * 2.0,
             0.0,
           ),
           child: add(),
@@ -180,18 +169,10 @@ class _FancyFabState extends State<FancyFab>
         Transform(
           transform: Matrix4.translationValues(
             0.0,
-            _translateButton.value * 2.0,
-            0.0,
-          ),
-          child: image(),
-        ),
-        Transform(
-          transform: Matrix4.translationValues(
-            0.0,
             _translateButton.value,
             0.0,
           ),
-          child: inbox(),
+          child: image(),
         ),
         toggle(),
       ],

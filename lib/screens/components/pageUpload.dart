@@ -19,6 +19,8 @@ class _Gallery extends State<Gallery> {
   File _imageFile;
   String text;
   _Gallery({this.text});
+  double imageWidth;
+  double imageHeight;
 
   /// Cropper plugin
   Future<void> _cropImage() async {
@@ -52,6 +54,19 @@ class _Gallery extends State<Gallery> {
 
   @override
   Widget build(BuildContext context) {
+    //Détecte si si en Mode Portrait ou Paysage
+    var isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
+    //Si mode portrait
+    if (isPortrait == true) {
+      // is portrait
+      imageWidth = 643;
+      imageHeight = 631;
+    }
+    //Si mode Paysage
+    else {
+      // is landscape
+      imageHeight = 197;
+    }
     if (_imageFile == null) {
       print(text);
       if (text == "gallery") {
@@ -63,19 +78,29 @@ class _Gallery extends State<Gallery> {
     }
 
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Ajouter une image'),
+      ),
       // Select an image from the camera or gallery
       bottomNavigationBar: BottomAppBar(
-        child: Row(
-          children: <Widget>[
-            IconButton(
-              icon: Icon(Icons.photo_camera),
-              onPressed: () => _pickImage(ImageSource.camera),
-            ),
-            IconButton(
-              icon: Icon(Icons.photo_library),
-              onPressed: () => _pickImage(ImageSource.gallery),
-            ),
-          ],
+        shape: CircularNotchedRectangle(),
+        child: Container(
+          margin: EdgeInsets.only(left: 75.0, right: 75.0),
+          height: 60,
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              IconButton(
+                icon: Icon(Icons.photo_camera),
+                onPressed: () => _pickImage(ImageSource.camera),
+              ),
+              IconButton(
+                icon: Icon(Icons.photo_library),
+                onPressed: () => _pickImage(ImageSource.gallery),
+              ),
+            ],
+          ),
         ),
       ),
 
@@ -83,20 +108,33 @@ class _Gallery extends State<Gallery> {
       body: ListView(
         children: <Widget>[
           if (_imageFile != null) ...[
-            Image.file(_imageFile),
-            Row(
-              children: <Widget>[
-                FlatButton(
-                  child: Icon(Icons.crop),
-                  onPressed: _cropImage,
-                ),
-                FlatButton(
-                  child: Icon(Icons.refresh),
-                  onPressed: _clear,
-                ),
-              ],
+            Image.file(
+              _imageFile,
+              height: imageHeight,
+              width: imageWidth,
             ),
-            Uploader(file: _imageFile)
+            BottomAppBar(
+              shape: CircularNotchedRectangle(),
+              child: Container(
+                margin: EdgeInsets.only(left: 25.0, right: 25.0),
+                height: 60,
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    FlatButton(
+                      child: Icon(Icons.crop),
+                      onPressed: _cropImage,
+                    ),
+                    FlatButton(
+                      child: Icon(Icons.refresh),
+                      onPressed: _clear,
+                    ),
+                    Uploader(file: _imageFile),
+                  ],
+                ),
+              ),
+            ),
           ]
         ],
       ),

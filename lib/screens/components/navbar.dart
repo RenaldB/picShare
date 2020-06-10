@@ -53,7 +53,8 @@ class _NavBar extends State<NavBar> {
               },
             ),
             IconButton(
-              icon: Icon(Icons.menu),
+              iconSize: 30.0,
+              icon: Icon(Icons.keyboard_arrow_left,),
               onPressed: () {
                 Scaffold.of(context).openEndDrawer();
               },
