@@ -197,7 +197,7 @@ class _MyHomePageState extends State<MyHomePage> {
      return Container(
       margin: EdgeInsets.all(5),
       child: ClipRRect(
-        borderRadius: BorderRadius.all(Radius.circular(5)),
+        borderRadius: BorderRadius.all(Radius.circular(20)),
         child: InkWell(
           onTap: () {
             Navigator.push(

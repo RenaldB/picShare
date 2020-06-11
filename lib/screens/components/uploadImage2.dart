@@ -1,4 +1,3 @@
-
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -25,6 +24,9 @@ class _ImageCaptureState extends State<ImageCapture> {
         // ratioY: 1.0,
         // maxWidth: 512,
         // maxHeight: 512,
+        //toolbarColor: Colors.purple,
+        //toolbarWidgetColor: Colors.white,
+        //toolbarTitle: 'Crop It'
       );
 
     setState(() {
@@ -38,8 +40,7 @@ class _ImageCaptureState extends State<ImageCapture> {
     PickedFile selected = await _picker.getImage(source: source);
 
     setState(() {
-      if(selected.path.isNotEmpty)
-        _imageFile =File(selected.path);
+      if (selected.path.isNotEmpty) _imageFile = File(selected.path);
     });
   }
 
@@ -51,7 +52,6 @@ class _ImageCaptureState extends State<ImageCapture> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       // Select an image from the camera or gallery
       bottomNavigationBar: BottomAppBar(
         child: Row(
@@ -72,9 +72,7 @@ class _ImageCaptureState extends State<ImageCapture> {
       body: ListView(
         children: <Widget>[
           if (_imageFile != null) ...[
-
             Image.file(_imageFile),
-
             Row(
               children: <Widget>[
                 FlatButton(
@@ -87,7 +85,6 @@ class _ImageCaptureState extends State<ImageCapture> {
                 ),
               ],
             ),
-
             Uploader(file: _imageFile)
           ]
         ],
