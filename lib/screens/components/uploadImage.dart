@@ -4,6 +4,10 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/widgets.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:picshare/models/picshare.dart';
+import 'package:picshare/models/user.dart';
+import 'package:picshare/services/database.dart';
+import 'package:provider/provider.dart';
 
 class Uploader extends StatefulWidget {
   final File file;
@@ -21,22 +25,31 @@ class _UploaderState extends State<Uploader> {
   StorageUploadTask _uploadTask;
 
   /// Starts an upload task
-  void _startUpload() {
+  void _startUpload(DatabaseService db) {
     /// Unique file name for the file
     String filePath = 'images/${DateTime.now()}.png';
-
-    setState(() {
-      _uploadTask = _storage.ref().child(filePath).putFile(widget.file);
+    final StorageReference ref = _storage.ref().getRoot().child(filePath);
+    String url = '';
+    setState(() async {
+      _uploadTask = ref.putFile(widget.file);
+      _uploadTask.onComplete.then((value) => getIt(db));
     });
+    print(url);
   }
-
-  /// Remove image
-  void _clear() {
-    setState(() => _uploadTask = null);
+  void getIt (DatabaseService db ) async {
+    StorageTaskSnapshot storageSnapshot = await _uploadTask.onComplete;
+    var downloadUrl = await storageSnapshot.ref.getDownloadURL();
+    var url = downloadUrl;
+    db.updatePicShare(PicShare(picPath: url, addedDate: DateTime.now(), uid: db.uid));
+    //print(url);
+    //now use your url of the image you already upliaded to the storage
+    //you can save the url in the cloud database ...
   }
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<User>(context);
+    DatabaseService _db = DatabaseService(uid: user.uid);
     if (_uploadTask != null) {
       /// Manage the task state and event subscription with a StreamBuilder
       return StreamBuilder<StorageTaskEvent>(
@@ -47,6 +60,7 @@ class _UploaderState extends State<Uploader> {
             double progressPercent = event != null
                 ? event.bytesTransferred / event.totalByteCount
                 : 0;
+
             return AlertDialog(
               content: SingleChildScrollView(
                 child: ListBody(
@@ -83,11 +97,13 @@ class _UploaderState extends State<Uploader> {
           });
     } else {
       // Allows user to decide when to start the upload
-      return FloatingActionButton.extended(
-        onPressed: _startUpload,
-        icon: Icon(Icons.cloud_upload),
-        label: Text('Ajouter'),
-      );
+      return FlatButton.icon(
+          label: Text('Ajouter'),
+          icon: Icon(Icons.cloud_upload),
+          onPressed: () => {
+                _startUpload(_db),
+                
+              });
     }
   }
 }

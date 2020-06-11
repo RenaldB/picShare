@@ -163,13 +163,17 @@ class _MyHomePageState extends State<MyHomePage> {
           if (!snapshot.hasData) {
             return Text("Loading..");
           }
-          return ListView.builder(
-            itemExtent: 80.0,
-            itemCount: 50,
-            itemBuilder: (context, index) {
-              return _buildList(context, snapshot.data.documents[index]);
-            },
-          );
+          return StaggeredGridView.count(
+        crossAxisCount: valCrossAxisCount,
+        children: List.generate(
+          snapshot.data.documents.length,
+          (int i) {
+            return _buildList(context, snapshot.data.documents[i]);
+          },
+        ),
+        staggeredTiles: List.generate(10, (int index) {
+          return StaggeredTile.fit(2);
+        }),);
         },
       ),
       
@@ -190,10 +194,26 @@ class _MyHomePageState extends State<MyHomePage> {
     );    
   }
    Widget _buildList(BuildContext context, DocumentSnapshot document) {
-      return ListTile(
-        title: Image.network(document['picPath'])
-
-      );
+     return Container(
+      margin: EdgeInsets.all(5),
+      child: ClipRRect(
+        borderRadius: BorderRadius.all(Radius.circular(5)),
+        child: InkWell(
+          onTap: () {
+            Navigator.push(
+              context,
+              CupertinoPageRoute(
+                builder: (context) => Detail(document['picPath']),
+              ),
+            );
+          },
+          child: Hero(
+            child: Image.network(document['picPath']),
+            tag: document['picPath'],
+          ),
+        ),
+      ),
+    );
     }
 
   ///Redirection pour la page de profil
