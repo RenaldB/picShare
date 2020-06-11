@@ -60,7 +60,7 @@ class _Gallery extends State<Gallery> {
     if (isPortrait == true) {
       // is portrait
       imageWidth = 643;
-      imageHeight = 631;
+      imageHeight = 500;
     }
     //Si mode Paysage
     else {
@@ -113,24 +113,26 @@ class _Gallery extends State<Gallery> {
               height: imageHeight,
               width: imageWidth,
             ),
-            BottomAppBar(
-              shape: CircularNotchedRectangle(),
+            Container(
               child: Container(
                 margin: EdgeInsets.only(left: 25.0, right: 25.0),
-                height: 60,
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-                    FlatButton(
-                      child: Icon(Icons.crop),
-                      onPressed: _cropImage,
-                    ),
-                    FlatButton(
-                      child: Icon(Icons.refresh),
-                      onPressed: _clear,
-                    ),
                     Uploader(file: _imageFile),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        FlatButton(
+                          child: Icon(Icons.crop),
+                          onPressed: _cropImage,
+                        ),
+                        FlatButton(
+                          child: Icon(Icons.refresh),
+                          onPressed: _clear,
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               ),
