@@ -171,7 +171,7 @@ class _MyHomePageState extends State<MyHomePage> {
             return _buildList(context, snapshot.data.documents[i]);
           },
         ),
-        staggeredTiles: List.generate(10, (int index) {
+        staggeredTiles: List.generate(snapshot.data.documents.length, (int index) {
           return StaggeredTile.fit(2);
         }),);
         },
