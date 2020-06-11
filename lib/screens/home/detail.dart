@@ -32,7 +32,7 @@ class Detail extends StatelessWidget {
           child: Column(
             children: <Widget>[
               Hero(
-                child: Image.asset(
+                child: Image.network(
                   image,
                   height: imageHeight,
                   width: imageWidth,
