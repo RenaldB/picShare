@@ -26,24 +26,32 @@ class _UploaderState extends State<Uploader> {
 
   /// Starts an upload task
   void _startUpload(DatabaseService db) {
+    
     /// Unique file name for the file
     String filePath = 'images/${DateTime.now()}.png';
     final StorageReference ref = _storage.ref().getRoot().child(filePath);
     String url = '';
-    setState(() async {
-      _uploadTask = ref.putFile(widget.file);
+
+    setState(() {
+      _uploadTask = _storage.ref().child(filePath).putFile(widget.file);
       _uploadTask.onComplete.then((value) => getIt(db));
     });
-    print(url);
   }
-  void getIt (DatabaseService db ) async {
+
+  void getIt(DatabaseService db) async {
     StorageTaskSnapshot storageSnapshot = await _uploadTask.onComplete;
     var downloadUrl = await storageSnapshot.ref.getDownloadURL();
     var url = downloadUrl;
-    db.updatePicShare(PicShare(picPath: url, addedDate: DateTime.now(), uid: db.uid));
+    db.updatePicShare(
+        PicShare(picPath: url, addedDate: DateTime.now(), uid: db.uid));
     //print(url);
     //now use your url of the image you already upliaded to the storage
     //you can save the url in the cloud database ...
+  }
+
+  /// Remove image
+  void _clear() {
+    setState(() => _uploadTask = null);
   }
 
   @override
@@ -60,7 +68,6 @@ class _UploaderState extends State<Uploader> {
             double progressPercent = event != null
                 ? event.bytesTransferred / event.totalByteCount
                 : 0;
-
             return AlertDialog(
               content: SingleChildScrollView(
                 child: ListBody(
@@ -97,13 +104,13 @@ class _UploaderState extends State<Uploader> {
           });
     } else {
       // Allows user to decide when to start the upload
-      return FlatButton.icon(
-          label: Text('Ajouter'),
-          icon: Icon(Icons.cloud_upload),
-          onPressed: () => {
-                _startUpload(_db),
-                
-              });
+      return FloatingActionButton.extended(
+        onPressed: () {
+          _startUpload(_db);
+        },
+        icon: Icon(Icons.cloud_upload),
+        label: Text('Ajouter'),
+      );
     }
   }
 }
