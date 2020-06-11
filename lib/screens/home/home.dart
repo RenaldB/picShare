@@ -1,16 +1,22 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:picshare/models/picshare.dart';
 import 'package:picshare/screens/components/navbar.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:picshare/screens/home/detail.dart';
+import 'package:picshare/services/database.dart';
+import 'package:provider/provider.dart';
 import '../profil/profil.dart';
 import '../components/uploadImage2.dart';
 import 'package:picshare/services/auth.dart';
 import 'package:picshare/screens/components/mainButton.dart';
 import 'package:universal_platform/universal_platform.dart';
+
+import 'components/picshare_list.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
@@ -39,6 +45,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     //Détecte si si en Mode Portrait ou Paysage
     var isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
+    
     //Si mode portrait
     if (isPortrait == true) {
       // is portrait
@@ -149,7 +156,24 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       endDrawerEnableOpenDragGesture: true,
-      body: StaggeredGridView.count(
+      body: StreamBuilder(
+        stream: Firestore.instance.collection('picshare').snapshots(),
+        //print an integer every 2secs, 10 times
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return Text("Loading..");
+          }
+          return ListView.builder(
+            itemExtent: 80.0,
+            itemCount: 50,
+            itemBuilder: (context, index) {
+              return _buildList(context, snapshot.data.documents[index]);
+            },
+          );
+        },
+      ),
+      
+       /*StaggeredGridView.count(
         crossAxisCount: valCrossAxisCount,
         children: List.generate(
           10,
@@ -160,11 +184,17 @@ class _MyHomePageState extends State<MyHomePage> {
         staggeredTiles: List.generate(10, (int index) {
           return StaggeredTile.fit(2);
         }),
-      ),
+      ),*/
       bottomNavigationBar: NavBar(),
       floatingActionButton: FancyFab(),
-    );
+    );    
   }
+   Widget _buildList(BuildContext context, DocumentSnapshot document) {
+      return ListTile(
+        title: Image.network(document['picPath'])
+
+      );
+    }
 
   ///Redirection pour la page de profil
   void pageProfil() {
